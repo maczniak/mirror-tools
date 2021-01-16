@@ -36,40 +36,43 @@ optional arguments:
 
 ```
 % ./dangerous_cdps.py
-UTC time 2021-01-15T11:32:47.277752
+UTC time 2021-01-16T10:42:21.514336
    id    ratio      minted asset          collateral
 ----- -------- -----------------          -------------------
-  575 1.566714   0.003804 mNFLX  based on     2.992764 uusd
+  575 1.582980   0.003804 mNFLX  based on     2.992764 uusd
+                             when  497.00 →  524.49 uusd   ( 5.5%)
                              owner terra10my55ndyhpr7ww4r7hh4wyepdpzlxck7tj63m8
-  484 1.567068 205.068588 mUSO   based on 11466.000000 uusd
+  484 1.585284 205.068588 mUSO   based on 11466.000000 uusd
+                             when   35.27 →   37.28 uusd   ( 5.7%)
                              owner terra1a4395q65xl280z8fp9uzrtqkem5pe4wlqu7wcv
-  115 1.592157   0.176031 mUSO   based on    10.000000 uusd
+  115 1.610665   0.176031 mUSO   based on    10.000000 uusd
+                             when   35.27 →   37.87 uusd   ( 7.4%)
                              owner terra1x87fla7nuws8ugwmjlwy3v85zf6z2a3e4lhvzj
-  485 1.592432 145.253279 mUSO   based on  8252.999000 uusd
+  485 1.610943 145.253279 mUSO   based on  8252.999000 uusd
+                             when   35.27 →   37.88 uusd   ( 7.4%)
                              owner terra1a4395q65xl280z8fp9uzrtqkem5pe4wlqu7wcv
-  418 1.597302   0.739896 mTSLA  based on  1000.000000 uusd
+  380 1.632389  23.261723 mGOOGL based on 65540.000000 uusd
+                             when 1726.00 → 1878.34 uusd   ( 8.8%)
+                             owner terra168z3l70phnj7df32fd3cq76nsa4kecepjwv7l2
+  428 1.634880   6.350548 mGOOGL based on 17919.997000 uusd
+                             when 1726.00 → 1881.20 uusd   ( 9.0%)
+                             owner terra168z3l70phnj7df32fd3cq76nsa4kecepjwv7l2
+  418 1.640658   0.739896 mTSLA  based on  1000.000000 uusd
+                             when  823.78 →  901.03 uusd   ( 9.4%)
                              owner terra1ldff05jhweptzyae32gmaxse2uufkl3l3qv028
-  380 1.629095  23.261723 mGOOGL based on 65540.000000 uusd
-                             owner terra168z3l70phnj7df32fd3cq76nsa4kecepjwv7l2
-  428 1.631581   6.350548 mGOOGL based on 17919.997000 uusd
-                             owner terra168z3l70phnj7df32fd3cq76nsa4kecepjwv7l2
-  174 1.640343 285.541208 mUSO   based on 16712.000000 uusd
+  174 1.659411 285.541208 mUSO   based on 16712.000000 uusd
+                             when   35.27 →   39.02 uusd   (10.6%)
                              owner terra1x87fla7nuws8ugwmjlwy3v85zf6z2a3e4lhvzj
-  570 1.694586 474.766177 mIAU   based on 14200.000000 uusd
-                             owner terra1p73vkrdex2v63f4pdausg3gpknw686k03ed46n
-  265 1.694702 936.094812 mIAU   based on 28000.000000 uusd
-                             owner terra18xe32tuqrlkqkep5r3xprq8sp3ywaux9zmaedf
-  661 1.697592 349.999999 mIAU   based on 10486.875000 uusd
-                             owner terra1p73vkrdex2v63f4pdausg3gpknw686k03ed46n
 % ./dangerous_cdps.py -h
-usage: dangerous_cdps.py [-h] [-m MAXRATIO]
+usage: dangerous_cdps.py [-h] [-m MAXRATIO | --maxRise MAXRISE]
 
-You can liquidate under-collateralized cdps
+You can liquidate under-collateralized CDPs
  by running `mirrorcli exec mint auction <id> <asset>`.
 
 optional arguments:
   -h, --help            show this help message and exit
   -m MAXRATIO, --maxRatio MAXRATIO
-                        list cdps under this threshold (default: 1.7)
+                        list CDPs under this ratio threshold (default: 1.7)
+  --maxRise MAXRISE     list CDPs under this percent threshold
 ```
 

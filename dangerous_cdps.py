@@ -10,11 +10,16 @@ import urllib.request
 
 opt_parser = argparse.ArgumentParser(
   formatter_class=argparse.RawDescriptionHelpFormatter,
-  description = 'You can liquidate under-collateralized cdps\n'
+  description = 'You can liquidate under-collateralized CDPs\n'
                 ' by running `mirrorcli exec mint auction <id> <asset>`.')
-opt_parser.add_argument('-m', '--maxRatio', default = '1.7',
-                        help = 'list cdps under this threshold (default: 1.7)')
+opt_group = opt_parser.add_mutually_exclusive_group()
+opt_group.add_argument('-m', '--maxRatio', default = '1.7',
+                   help = 'list CDPs under this ratio threshold (default: 1.7)')
+opt_group.add_argument('--maxRise',
+                       help = 'list CDPs under this percent threshold')
 opts = opt_parser.parse_args()
+maxRatio = float(opts.maxRise) * 1.5 / 100 + 1.5 if opts.maxRise \
+                                                 else opts.maxRatio 
 
 query = json.dumps({
   "query": '''query {
@@ -27,7 +32,7 @@ query = json.dumps({
       collateralAmount
       collateralRatio
     }
-  }'''.replace('\n','') % opts.maxRatio
+  }'''.replace('\n','') % maxRatio
 }).encode('utf-8')
 
 with urllib.request.urlopen('https://whitelist.mirror.finance/columbus.json') as f:
@@ -60,5 +65,9 @@ for cdp in cdps:
   print('%5s %8.6f %10.6f %-6s based on %12.6f %-6s' % (
           cdp.id, cdp.collateralRatio, cdp.mintAmount / 1000000, cdp.symbol,
           cdp.collateralAmount / 1000000, cdp.collateralToken))
+  print(' ' * 28, 'when %7.2f → %7.2f %-6s (%4.1f%%)' % (
+          cdp.collateralAmount / cdp.mintAmount / cdp.collateralRatio,
+          cdp.collateralAmount / cdp.mintAmount / 1.5, cdp.collateralToken,
+          (cdp.collateralRatio - 1.5) / 1.5 * 100))
   print(' ' * 28, 'owner %s' % cdp.address)
 
