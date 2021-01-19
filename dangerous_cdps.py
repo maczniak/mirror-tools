@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 # TODO: discount calculation, unusual minimum collateral ratio
+# TODO: mAsset collateral in uusd
 
 import argparse
 from collections import namedtuple
@@ -62,12 +63,14 @@ print('UTC time', datetime.datetime.utcnow().isoformat())
 print('   id    ratio      minted asset          collateral')
 print('----- -------- -----------------          -------------------')
 for cdp in cdps:
+  collateralToken = token2symbol[cdp.collateralToken] \
+    if cdp.collateralToken != 'uusd' else cdp.collateralToken
   print('%5s %8.6f %10.6f %-6s based on %12.6f %-6s' % (
           cdp.id, cdp.collateralRatio, cdp.mintAmount / 1000000, cdp.symbol,
-          cdp.collateralAmount / 1000000, cdp.collateralToken))
+          cdp.collateralAmount / 1000000, collateralToken))
   print(' ' * 28, 'when %7.2f → %7.2f %-6s (%4.1f%%)' % (
           cdp.collateralAmount / cdp.mintAmount / cdp.collateralRatio,
-          cdp.collateralAmount / cdp.mintAmount / 1.5, cdp.collateralToken,
+          cdp.collateralAmount / cdp.mintAmount / 1.5, collateralToken,
           (cdp.collateralRatio - 1.5) / 1.5 * 100))
   print(' ' * 28, 'owner %s' % cdp.address)
 
