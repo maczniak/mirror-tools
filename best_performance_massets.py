@@ -64,12 +64,12 @@ def masset_perf_comparator(masset):
 massets = sorted(massets, key = masset_perf_comparator, reverse = True)
 
 print('UTC time', datetime.datetime.utcnow().isoformat())
-print('symbol  total = trade + stake')
-print('------ ------   -----   ------')
+print('symbol  total =  trade + stake')
+print('------ ------   ------   ------')
 for masset in massets:
   # trading commission (as percentage)
   tc = masset.volume / volume_fraction * 0.003 / masset.liquidity * 365 * 100
   # lp stake reward (as percentage)
   ls = masset.apr * 100
-  print('%6s %6.2f = %5.2f + %6.2f' % (masset.symbol, tc + ls, tc, ls))
+  print('%6s %6.2f = %6.2f + %6.2f' % (masset.symbol, tc + ls, tc, ls))
 
