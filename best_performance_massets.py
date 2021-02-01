@@ -36,9 +36,10 @@ query = json.dumps({
   }'''.replace('\n','') % (network, network)
 }).encode('utf-8')
 
-now = time.gmtime()
-seconds_since_midnight = now.tm_hour * 60 * 60 + now.tm_min * 60 + now.tm_sec
-volume_fraction = seconds_since_midnight / (24 * 60 * 60)
+#now = time.gmtime()
+#seconds_since_midnight = now.tm_hour * 60 * 60 + now.tm_min * 60 + now.tm_sec
+#volume_fraction = seconds_since_midnight / (24 * 60 * 60)
+volume_fraction = 1
 
 with urllib.request.urlopen('https://whitelist.mirror.finance/columbus.json') as f:
   meta_infos = json.load(f)
