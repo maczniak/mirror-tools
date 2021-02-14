@@ -56,7 +56,8 @@ massets = [Masset(symbol = token2symbol[x['token']],
                   liquidity = int(x['statistic']['liquidity']),
                   volume =    int(x['statistic']['volume']),
                   apr =     float(x['statistic']['apr']))
-            for x in masset_infos['data']['assets']]
+            for x in masset_infos['data']['assets']
+            if x['token'] in token2symbol]
 
 def masset_perf_comparator(masset):
   # trading commission + lp stake reward

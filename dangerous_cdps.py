@@ -68,9 +68,13 @@ for cdp in cdps:
   print('%5s %8.6f %10.6f %-6s based on %12.6f %-6s' % (
           cdp.id, cdp.collateralRatio, cdp.mintAmount / 1000000, cdp.symbol,
           cdp.collateralAmount / 1000000, collateralToken))
-  print(' ' * 28, 'when %7.2f → %7.2f %-6s (%4.1f%%)' % (
-          cdp.collateralAmount / cdp.mintAmount / cdp.collateralRatio,
-          cdp.collateralAmount / cdp.mintAmount / 1.5, collateralToken,
-          (cdp.collateralRatio - 1.5) / 1.5 * 100))
+  if cdp.collateralRatio >= 1.5:
+    print(' ' * 28, 'when %7.2f → %7.2f %-6s (%4.1f%%)' % (
+            cdp.collateralAmount / cdp.mintAmount / cdp.collateralRatio,
+            cdp.collateralAmount / cdp.mintAmount / 1.5, collateralToken,
+            (cdp.collateralRatio - 1.5) / 1.5 * 100))
+  else:
+    # mAsset amount / 0.8 * mAsset price / collateral price
+    print(' ' * 28, 'can be margin called')
   print(' ' * 28, 'owner %s' % cdp.address)
 
