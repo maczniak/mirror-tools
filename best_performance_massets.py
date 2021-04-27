@@ -23,6 +23,16 @@ opt_group.add_argument('--combine', dest = 'network',
 opts = opt_parser.parse_args()
 network = opts.network if opts.network else 'TERRA'
 
+def make_request(url, query):
+  if query:
+    query = query.encode('utf-8')
+  return urllib.request.Request(url,
+                                data = query,
+                                headers = {
+                                  'Content-Type': 'application/json',
+                                  'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.72 Safari/537.36'
+                                })
+
 query = json.dumps({
   "query": '''query {
     assets {
@@ -34,20 +44,18 @@ query = json.dumps({
       }
     }
   }'''.replace('\n','') % (network, network)
-}).encode('utf-8')
+})
 
 #now = time.gmtime()
 #seconds_since_midnight = now.tm_hour * 60 * 60 + now.tm_min * 60 + now.tm_sec
 #volume_fraction = seconds_since_midnight / (24 * 60 * 60)
 volume_fraction = 1
 
-with urllib.request.urlopen('https://whitelist.mirror.finance/columbus.json') as f:
+with urllib.request.urlopen(make_request('https://whitelist.mirror.finance/columbus.json', None)) as f:
   meta_infos = json.load(f)
 token2symbol = {k: v['symbol'] for (k, v) in meta_infos['whitelist'].items()}
 
-req = urllib.request.Request('https://graph.mirror.finance/graphql',
-                             data = query,
-                             headers = {'Content-Type': 'application/json'})
+req = make_request('https://graph.mirror.finance/graphql', query)
 with urllib.request.urlopen(req) as f:
   masset_infos = json.load(f)
 
